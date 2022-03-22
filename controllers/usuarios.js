@@ -2,8 +2,6 @@ const { response } = require("express");
 const bcryptjs = require("bcryptjs");
 
 const Usuario = require("../models/usuario");
-const { existeEmail } = require("../helpers/db-validators");
-const usuario = require("../models/usuario");
 
 const usuariosGet = async (req, res = response) => {
   // const { q, nombre, apikey } = req.query;
@@ -43,7 +41,7 @@ const usuariosPost = async (req, res = response) => {
 
 const usuariosPut = async (req, res = response) => {
   const { id } = req.params;
-  const { password, google, ...resto } = req.body;
+  const { _id, password, google, correo, ...resto } = req.body;
 
   if (password) {
     const salt = bcryptjs.genSaltSync();
@@ -52,9 +50,7 @@ const usuariosPut = async (req, res = response) => {
 
   const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
-  res.json({
-    usuario,
-  });
+  res.json(usuario);
 };
 
 const usuariosDelete = async (req, res = response) => {
@@ -65,9 +61,7 @@ const usuariosDelete = async (req, res = response) => {
 
   // Borrado Lógico
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
-  res.json({
-    usuario,
-  });
+  res.json(usuario);
 };
 
 const usuariosPatch = (req, res = response) => {
