@@ -1,9 +1,9 @@
-const { response } = require("express");
+const { request, response } = require("express");
 const bcryptjs = require("bcryptjs");
 
 const Usuario = require("../models/usuario");
 
-const usuariosGet = async (req, res = response) => {
+const usuariosGet = async (req = request, res = response) => {
   // const { q, nombre, apikey } = req.query;
   const { limit = 5, from = 0 } = req.query;
   const query = { estado: true };
@@ -23,7 +23,7 @@ const usuariosGet = async (req, res = response) => {
   });
 };
 
-const usuariosPost = async (req, res = response) => {
+const usuariosPost = async (req = request, res = response) => {
   const { nombre, correo, password, rol } = req.body;
   const usuario = new Usuario({ nombre, correo, password, rol });
 
@@ -39,7 +39,7 @@ const usuariosPost = async (req, res = response) => {
   });
 };
 
-const usuariosPut = async (req, res = response) => {
+const usuariosPut = async (req = request, res = response) => {
   const { id } = req.params;
   const { _id, password, google, correo, ...resto } = req.body;
 
@@ -53,7 +53,7 @@ const usuariosPut = async (req, res = response) => {
   res.json(usuario);
 };
 
-const usuariosDelete = async (req, res = response) => {
+const usuariosDelete = async (req = request, res = response) => {
   const { id } = req.params;
 
   // Borrado físico
@@ -64,7 +64,7 @@ const usuariosDelete = async (req, res = response) => {
   res.json(usuario);
 };
 
-const usuariosPatch = (req, res = response) => {
+const usuariosPatch = (req = request, res = response) => {
   res.json({
     msg: "patch API - controlador",
   });
